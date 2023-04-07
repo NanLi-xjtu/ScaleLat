@@ -39,7 +39,7 @@ Download the file ScaleLat.zip.
     $ cd example/the/folder/contains/*.sh
     $ bash *.sh
 
-## Run FEcMD
+## Run ScaleLat
 
 There are various commands to perform the corresponding function.
 Perform kMC simulation:
