@@ -71,6 +71,7 @@ Calculate ACF
     $ ./scalelat ACF
 
 ## input file:
+
 -------------parameters for run.in (## ... should be deleted in run.in):
 eam_file	../in/potential/Fe_Cr_Eich_2015_TBM_lammps.eam.alloy  ## the atomic potential funtion
 MC_method	vacancy			## vacancy or atom exchange
