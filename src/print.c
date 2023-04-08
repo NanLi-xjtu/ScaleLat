@@ -1,6 +1,6 @@
 #include "print.h"
 
-char filename_EAM[128];
+char filename_EAM[128], filename_map[128];
 int error_map;
 
 NameList nameList[] = {
@@ -102,6 +102,7 @@ int GetNameList (int argc, char **argv)
 		GetCharVariable (line, "MC_method", MC_method);
 		GetCharVariable (line, "cell_order", cell_order);
 		GetCharVariables (line, "elem_preci", elem_preci);
+		GetCharVariable (line, "filename", filename_map);
 		GetDoubleVariables (line, "C_threshold", C_threshold);
 		GetDoubleVariables (line, "ith_nebrR", ith_nebrR);
 

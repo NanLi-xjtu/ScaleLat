@@ -1578,7 +1578,7 @@ void KMC_Cluster ()
 	double drmin1, drmin2, drmin3, dr, C, **cap, **cap_goal, temp, diff, diff_old, prob, *Celem;
 	VecR Vdr, region_goal;
 	FILE *input, *output;
-	char line[1024], elem[8], **element;
+	char line[1024], elem[8], **element, filename[128];
 
 	int *cellList;
 	VecI cells;
@@ -1624,7 +1624,8 @@ void KMC_Cluster ()
 	error = error_map;
 
 	printf ("\ngoal structure:\n");
-	input = fopen ("../in/goal.xyz", "r");
+	sprintf (filename, "../in/%s", filename_map);
+	input = fopen (filename, "r");
 	fgets (line, 1024, input);
 	sscanf (line, "%d", &Ngoal);
 	AllocMem (goal, Ngoal, Mol);
