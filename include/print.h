@@ -24,7 +24,7 @@ typedef struct {
 #define NP_I ((int *) (nameList[k].vPtr) + j)
 #define NP_R ((real *) (nameList[k].vPtr) + j)
 
-extern char filename_EAM[128];
+extern char filename_EAM[128], filename_map[128];
 extern int error_map;
 
 int GetNameList (int argc, char **argv);
