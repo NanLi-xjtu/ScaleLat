@@ -162,19 +162,6 @@ void CreatSuperCell ()
 		}
 	}
 
-	//output super cell
-	sprintf(filename,"../out/superCell/%d_%d_%d/Supercell.dat", cellSize.x, cellSize.y, cellSize.z);
-	output = WriteFile (filename);
-	fprintf(output,"%d\nSolutionReader properties=id:I:1:pos:R:3:species:S:1\n", NatomsSuCe);
-	k = 0;
-	for (i = 0; i < Nelems; i ++) {
-		for (j = 0; j < suce[i].Natoms; j ++) {
-			fprintf (output, "%d %f %f %f %s\n", k, suce[i].r[j].x, suce[i].r[j].y, suce[i].r[j].z, elemName_CONTCAR[i]);
-			k ++;
-		}
-	}
-	fclose (output);
-
 	//output supercell lattice
 	a = Mould (a1, a2, a3);
 	b = Mould (b1, b2, b3);
@@ -186,6 +173,21 @@ void CreatSuperCell ()
 	region.z = cellSize.z * c;
 	fprintf (output, "%f\n%f\n%f\n", region.x, region.y, region.z);
 	fclose (output);
+
+	//output super cell
+	sprintf(filename,"../out/superCell/%d_%d_%d/Supercell.xyz", cellSize.x, cellSize.y, cellSize.z);
+	output = WriteFile (filename);
+	fprintf(output,"%d\nLattice=\"%f 0.0 0.0 0.0 %f 0.0 0.0 0.0 %f\" SolutionReader properties=species:S:1:pos:R:3\n", NatomsSuCe, region.x, region.y, region.z);
+	k = 0;
+	for (i = 0; i < Nelems; i ++) {
+		for (j = 0; j < suce[i].Natoms; j ++) {
+			fprintf (output, "%s %f %f %f\n", elemName_CONTCAR[i], suce[i].r[j].x, suce[i].r[j].y, suce[i].r[j].z);
+			k ++;
+		}
+	}
+	fclose (output);
+	sprintf (command, "cp ../out/superCell/%d_%d_%d/Supercell.xyz ../out/superCell/Supercell.xyz", cellSize.x, cellSize.y, cellSize.z);
+	system (command);
 
 	//output POSCAR
 	sprintf(filename,"../out/superCell/%d_%d_%d/POSCAR", cellSize.x, cellSize.y, cellSize.z);
@@ -207,7 +209,8 @@ void CreatSuperCell ()
 						xdata = unce[m].r[n].x + j;
 						ydata = unce[m].r[n].y + k;
 						zdata = unce[m].r[n].z + l;
-						fprintf (output, "     %f     %f     %f\n", xdata, ydata, zdata);
+						fprintf (output, "     %f     %f     %f\n", \
+							 xdata/cellSize.x, ydata/cellSize.y, zdata/cellSize.z);
 					}
 				}
 			}

@@ -24,6 +24,7 @@ int main (int argc, char **argv)
 	printf("+----------------------------------oOOo---------+\n");
 	printf("\n");
 	GetNameList (argc, argv);
+	PrintNameList (stdout);
 
 	Run (argc, argv);
 
@@ -49,7 +50,7 @@ void Run (int argc, char **argv)
 				system ("rm -rf ../out");
 				system ("mkdir ../out");
 				system ("mkdir ../out/superCell");
-				system ("mkdir ../out/md");
+				system ("mkdir ../out/KMC");
 				//creat super cell
 				CreatSuperCell ();
 				//set parameters and allocate memory
@@ -58,7 +59,7 @@ void Run (int argc, char **argv)
 			} else if (strcmp (argv[1], "restart") == 0) {
 				system ("rm -rf ../out");
 				system ("mkdir ../out");
-				system ("mkdir ../out/md");
+				system ("mkdir ../out/KMC");
 				Restart ();
 			} else if (strcmp (argv[1], "analysis") == 0) {
 				system ("rm -f ../out/d_profile*.dat");
@@ -95,7 +96,7 @@ void Run (int argc, char **argv)
 				system ("rm -rf ../out");
 				system ("mkdir ../out");
 				system ("mkdir ../out/superCell");
-				system ("mkdir ../out/md");
+				system ("mkdir ../out/KMC");
 				//creat super cell
 				CreatSuperCell ();
 				//set parameters and allocate memory
@@ -112,23 +113,24 @@ void Run (int argc, char **argv)
 				CalAutocorrelationFunction ();
 				exit (0);
 			} else if (strcmp (argv[1], "CE") == 0) {
-				system ("rm -rf ../out/CE && mkdir ../out/CE");
-				ClusterExtract ();
+				system ("rm -rf ../out && mkdir ../out");
+				system ("mkdir ../out/CE_benchmark");
+				ReadMat ();
+				ObtainSym (); //obtain symmetry points group
+				GoalClusterExtract ();
 				exit (0);
 			} else if (strcmp (argv[1], "MAP") == 0) {
-//				printf ("input the size of mapping strcture:(eg. 1 1 1)\n");
-//				scanf ("%d %d %d", &cellSize.x, &cellSize.y, &cellSize.z);
 				sprintf (mode, "MAP");
-				system ("mkdir ../out");
-				system ("mkdir ../out/CE");
-				system ("rm -rf ../out/superCell && mkdir ../out/superCell");
-				system ("rm -rf ../out/CE/kMC*");
-				//creat super cell
-				CreatSuperCell ();
-				//set parameters and allocate memory
-				Setup ();
-				SetupMD ();
-				KMC_Cluster ();
+				system ("rm -rf ../out && mkdir ../out");
+				system ("mkdir ../out/CE_benchmark");
+				system ("mkdir ../out/CE_trial");
+				system ("mkdir ../out/superCell");
+				ReadMat ();
+				ObtainSym (); //obtain symmetry points group
+				CreatSuperCell ();//creat super cell
+				system ("cp ../out/superCell/Supercell.xyz ../in/trial.xyz");
+				system ("rm -rf ../out/superCell");
+				Mapping ();
 				exit (0);
 			} else {
 				printf ("error(mc.c): input format\n");

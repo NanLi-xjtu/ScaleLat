@@ -25,7 +25,7 @@ void Setup ()
 
 	//read atom number from super cell
 	AllocMem (Natoms, Nelems+1, int);
-	sprintf (filename, "../out/superCell/%d_%d_%d/Supercell.dat", cellSize.x, cellSize.y, cellSize.z);
+	sprintf (filename, "../out/superCell/%d_%d_%d/Supercell.xyz", cellSize.x, cellSize.y, cellSize.z);
 	input = ReadFile (filename);
 	fgets (line, 1024, input);
 	sscanf (line, "%d", &Natoms[0]);
@@ -57,7 +57,7 @@ void Setup ()
 	n = 0;
 	while (1) {
 		if (fgets (line, 1024, input) == NULL) break;
-		sscanf (line, "%d %lg %lg %lg %s\n", &temp, &atom[n].r.x, &atom[n].r.y, &atom[n].r.z, atom[n].element);
+		sscanf (line, "%s %lg %lg %lg\n", atom[n].element, &atom[n].r.x, &atom[n].r.y, &atom[n].r.z);
 		n ++;
 	}
 	DO_ATOM {
@@ -154,7 +154,7 @@ void SetupMD ()
 	Get_pair_distance ();
 	//get i-th sphere neighbour atoms and pairs lists
 	Get_neighbour ();
-	PrintNeighbour ();
+//	PrintNeighbour ();
 
 	//RDF
 	rangeRdf /= lUnit * 1.e10; //dimensionless
@@ -998,7 +998,7 @@ void PrintMovie ()
 	FILE *movie, *restart, *xyz;
 	int n;
 
-	if ((movie = fopen ("../out/md/out.movie", "a+")) == NULL){
+	if ((movie = fopen ("../out/KMC/out.movie", "a+")) == NULL){
 		printf ("\nopen movie file error");
 		getchar ();
 		exit (1);
@@ -1008,7 +1008,7 @@ void PrintMovie ()
 		getchar ();
 		exit (1);
 	}
-	sprintf (filename, "../out/md/out_%d.xyz", movie_count);
+	sprintf (filename, "../out/KMC/out_%d.xyz", movie_count);
 	if ((xyz = fopen (filename, "a+")) == NULL){
 		printf ("\nopen xyz file error");
 		getchar ();

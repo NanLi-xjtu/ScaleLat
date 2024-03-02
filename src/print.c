@@ -16,6 +16,7 @@ NameList nameList[] = {
 	NameI (stepAtom),
 	NameI (nthreads),
 	NameI (seed),
+	NameI (clusterSize),
 	//the max neighbour number
 	NameI (nebrTabFac),
 	//RDF
@@ -28,7 +29,7 @@ NameList nameList[] = {
 
 int GetNameList (int argc, char **argv)
 {
-	int id, j, k, match, ok, n;
+	int id, i, j, k, match, ok, n;
 	char buff[80], *token, filename[128], line[1024];
 	FILE *fp, *input;
 
@@ -103,6 +104,7 @@ int GetNameList (int argc, char **argv)
 		GetCharVariable (line, "cell_order", cell_order);
 		GetCharVariables (line, "elem_preci", elem_preci);
 		GetCharVariable (line, "filename", filename_map);
+		GetCharVariable (line, "pointGroup", pointGroup);
 		GetDoubleVariables (line, "C_threshold", C_threshold);
 		GetDoubleVariables (line, "ith_nebrR", ith_nebrR);
 
@@ -122,6 +124,7 @@ int GetNameList (int argc, char **argv)
 	}
 	
 	fclose (input);
+
 	return (ok);
 }
 
@@ -131,9 +134,9 @@ void PrintNameList (FILE *fp)
 
 	fprintf (fp, "\nNameList -- data\n");
 	for (k = 0; k < sizeof (nameList) / sizeof (NameList); k ++){
-		fprintf (fp, "%s\t", nameList[k].vName);
-		if (strlen (nameList[k].vName) < 8) fprintf (fp, "\t");
-		if (nameList[k].vStatus > 0){
+		if (nameList[k].vStatus > 0) {
+			fprintf (fp, "%s\t", nameList[k].vName);
+			if (strlen (nameList[k].vName) < 8) fprintf (fp, "\t");
 			for (j = 0; j < nameList[k].vLen; j ++){
 				switch (nameList[k].vType){
 					case N_I:
@@ -144,10 +147,11 @@ void PrintNameList (FILE *fp)
 						break;
 				}
 			}
+			fprintf (fp, "\n");
 		}
 		switch (nameList[k].vStatus){
 			case 0:
-				fprintf (fp, "** no data");
+//				fprintf (fp, "** no data");
 				break;
 			case 1:
 				break;
@@ -161,7 +165,6 @@ void PrintNameList (FILE *fp)
 				fprintf (fp, "** multiply defined");
 				break;
 		}
-		fprintf (fp, "\n");
 	}
 	fprintf (fp, "----\n");
 }

@@ -337,17 +337,17 @@ void printfeam_alloy ()
   int i, j, n;
   FILE *frhoeam_file, *zream_file, *rhoream_file;
 
-  if ((frhoeam_file = fopen ("out/md/eamfrho_alloy.dat", "a+")) == NULL){
+  if ((frhoeam_file = fopen ("out/KMC/eamfrho_alloy.dat", "a+")) == NULL){
     printf ("\nopen frho file error");
     getchar ();
     exit (1);
   }
-  if ((zream_file = fopen ("out/md/eamz2r_alloy.dat", "a+")) == NULL){
+  if ((zream_file = fopen ("out/KMC/eamz2r_alloy.dat", "a+")) == NULL){
     printf ("\nopen zream file error");
     getchar ();
     exit (1);
   }
-  if ((rhoream_file = fopen ("out/md/eamrhor_alloy.dat", "a+")) == NULL){
+  if ((rhoream_file = fopen ("out/KMC/eamrhor_alloy.dat", "a+")) == NULL){
     printf ("\nopen rhoream file error");
     getchar ();
     exit (1);
@@ -385,7 +385,7 @@ void printfspline_alloy (double ***xxxspline)
   int m, n, i, itype, jtype, num, type;
   FILE *spline_file;
 
-  if ((spline_file = fopen ("out/md/eamspline.dat", "a+")) == NULL){
+  if ((spline_file = fopen ("out/KMC/eamspline.dat", "a+")) == NULL){
     printf ("\nopen spline file error");
     getchar ();
     exit (1);
