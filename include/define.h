@@ -10,18 +10,24 @@ typedef struct {
 typedef struct {
 	int x,y,z;
 } VecI;
- typedef struct{
+typedef struct{
 	VecR r, rv, ra;
 	char elem[8]; //the type of element of the atom
 	int Nnebr, *nebr_id, nebr[2000];
 	int preci_flag;
 	int interface_flag;
+	int NCEatom, *CEatom; //atoms of each cluster
 	double C;
+	int *Nelem;
 	double *Celem;
 	int id;
 	int Nsym; //the number of symmetry cluters
- } Mol;
-
+	int match_flag;
+} Mol;
+typedef struct{
+	double C;
+	int *Nc;
+} CTABLE;
 
 #define NDIM 3
 #define Nthreads 22
@@ -62,6 +68,8 @@ typedef struct {
 	(((x1) < (x2)) ? (x1) : (x2))
 #define MAX(x1, x2)			\
 	(((x1) > (x2)) ? (x1) : (x2))
+#define VCMax(v)			\
+	(Max(Max((v).x, (v).y), (v).z))
 #define VCSum(v)			\
 	((v).x + (v).y + (v).z)
 #define VProd(v)	((v).x * (v).y * (v).z)

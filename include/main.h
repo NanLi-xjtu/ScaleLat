@@ -18,6 +18,8 @@
 #include "nebrList.h"
 #include "measurement.h"
 #include "Mass_density_distribution.h"
+#include "mapping.h"
+#include "symmetry.h"
 
 extern char mode[128];
 void Run (int argc, char **argv);
