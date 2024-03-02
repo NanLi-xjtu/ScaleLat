@@ -1,35 +1,9 @@
-------------------------------------------------------------
--------------------------Monte Colar------------------------
-eam_file	../in/potential/Fe_Cr_Eich_2015_TBM_lammps.eam.alloy
-## vacancy, atom
-MC_method	vacancy
-cellSize	10 10 10
-## order or disorder
-cell_order	order
-threshold	0.001
-NeighbourMax	20
-#Temperature Unit: K
-T_max		673
-Nelems		2
-elemName	Cr Fe
-Ndists		1
-NLOOP		1.e10
-stepAvg		1.e5
-stepMovie	1.e5
-stepVacancy	100
-stepAtom	1
-nthreads	8
-seed		7
-## the max neighbour number
-nebrTabFac	1000
--------------------------------------------------------------
-----------------------------RDF------------------------------
-limitRdf	100
-stepRdf		100000
-rangeRdf	5.
-sizeHistRdf	200
--------------------------------------------------------------
---------------------identify precipitates--------------------
-ith_nebrR	2.
-C_threshold	0.95
-elem_preci	Cr
+cellSize	4 4 4
+Nelems		5
+elemName	Co Cr Cu Fe Ni
+NLOOP		1000
+clusterSize	1 1 2
+pointGroup	mmm
+cell_order	disorder
+nebrTabFac	200
+error_map	1
