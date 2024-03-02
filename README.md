@@ -39,7 +39,7 @@ Download the file ScaleLat.zip.
     $ cd example/the/folder/contains/*.sh
     $ bash *.sh
 
-## Run ScaleLat
+## Run FEcMD
 
 There are various commands to perform the corresponding function.
 Perform kMC simulation:
@@ -71,7 +71,6 @@ Calculate ACF
     $ ./scalelat ACF
 
 ## input file:
-
 -------------parameters for run.in (## ... should be deleted in run.in):
 eam_file	../in/potential/Fe_Cr_Eich_2015_TBM_lammps.eam.alloy  ## the atomic potential funtion
 MC_method	vacancy			## vacancy or atom exchange
@@ -98,15 +97,17 @@ rangeRdf	5.			# The range of RDF [Angstrom]
 sizeHistRdf	200			# The size of histogram
 --------------------------------------------------------------
 -----------------------------MAP------------------------------
-ith_nebrR	2			# The number of shells of cluster extraction
+clusterSize	6 6 6			# The size of cluster extraction [unit: lattice parameter]
 error_map	1			# the standard deviation (1) or the mean absolute error (0)
+pointGroup	m3m			# the symmetry points group
+cell_order	disorder		# order or disorder for the initial trial supercell
 --------------------------------------------------------------
 --------------------------Analysis----------------------------
 ith_nebrR	2			# The number of shells of cluster analysis
 C_threshold	0.95			# The concentration threshold of cluster analysis
 elem_preci	Cr			# The element type of cluster analysis
 
-Alloy atomic trajectory input file ‘goal.xyz’ format (example for HEA):
+Alloy atomic trajectory input file ‘benchmark.xyz’ format (example for HEA):
 108000  ## atomic number
 Lattice="105.600002 0.0 0.0 0.0 105.599999 0.0 0.0 0.0 105.599999" Properties=species:S:1:pos:R:3  ## box region and the title for ovito
 Cr 44.0 10.56 12.320001
@@ -143,9 +144,11 @@ sro.dat: SRO data.
 rdf.dat: RDF data.
 precipitates_*.dat: the average size, density and volume of precipitates.
 precipitates_*.movie: the atom structure of precipitates.
-CE: this folder includes cluster extraction and structure matching files.
-CE/*.dat: the number of characteristic chemical clusters.
-CE/*.movie: characteristic chemical clusters.
-CE/ce.dat: characteristic chemical clusters of the benchmark large supercell.
-CE/mapping.dat: characteristic chemical clusters of the matching structure.
-CE/mapping.movie: atomic structure file of the matching structure.
+CE_benchmark: this folder includes extracted clusters of the benchmark supercell.
+CE_trial: this folder includes extracted clusters of the small trial structure.
+CE/CE.dat: the number of characteristic chemical clusters.
+CE/CE*.xyz: characteristic chemical clusters structure.
+CE/concentration.dat: the atomic concentration of characteristic chemical clusters.
+diff.dat: STD (or MAE) of atomic concentration and clusters proportion pi.
+mapping.dat: characteristic chemical clusters proportion pi of the benchmark supercell and the small trial supercell.
+mapping.xyz: atomic structure file of the matching structure.
